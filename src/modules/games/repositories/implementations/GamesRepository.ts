@@ -5,26 +5,24 @@ import { Game } from '../../entities/Game';
 
 import { IGamesRepository } from '../IGamesRepository';
 
-export class GamesRepository implements IGamesRepository {
+ export class GamesRepository { //implements IGamesRepository {
   private repository: Repository<Game>;
 
   constructor() {
     this.repository = getRepository(Game);
   }
 
-  async findByTitleContaining(param: string): Promise<Game[]> {
-    return this.repository
-      .createQueryBuilder()
+  async findByTitleContaining(param: string): Promise<any> {//Promise<Game[]> {
+    return undefined //this.repository.createQueryBuilder()
       // Complete usando query builder
   }
 
-  async countAllGames(): Promise<[{ count: string }]> {
-    return this.repository.query(); // Complete usando raw query
+  async countAllGames(): Promise<any> {//Promise<[{ count: string }]> {
+    return undefined//this.repository.query() // Complete usando raw query
   }
 
-  async findUsersByGameId(id: string): Promise<User[]> {
-    return this.repository
-      .createQueryBuilder()
+  async findUsersByGameId(id: string): Promise<any> {//Promise<User[]> {
+    return undefined //this.repository.createQueryBuilder()
       // Complete usando query builder
   }
 }
