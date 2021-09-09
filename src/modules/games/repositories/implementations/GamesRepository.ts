@@ -12,17 +12,26 @@ import { IGamesRepository } from '../IGamesRepository';
     this.repository = getRepository(Game);
   }
 
-  async findByTitleContaining(param: string): Promise<any> {//Promise<Game[]> {
-    return undefined //this.repository.createQueryBuilder()
-      // Complete usando query builder
+  async findByTitleContaining(param: string): Promise<Game[]> {
+      // Terminar
+      return await this.repository.createQueryBuilder("games").where("games.title like :title", { title: `%${param}%`}).getMany()
+
   }
 
-  async countAllGames(): Promise<any> {//Promise<[{ count: string }]> {
-    return undefined//this.repository.query() // Complete usando raw query
+  async countAllGames():  Promise<[{ count: string }]> {
+    return this.repository.query(
+      `
+        SELECT 
+            COUNT(*)
+        FROM 
+          games;
+
+      `
+    ) 
   }
 
-  async findUsersByGameId(id: string): Promise<any> {//Promise<User[]> {
-    return undefined //this.repository.createQueryBuilder()
-      // Complete usando query builder
+  async findUsersByGameId(id: string): Promise<User[]> {
+    // @ts-ignore
+    return await this.repository.createQueryBuilder("user").innerJoin("user.games", "users").getMany()  //where("games.id = :id", {id}).innerJoin("games.users", "users").getMany()
   }
 }
