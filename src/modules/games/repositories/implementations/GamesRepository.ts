@@ -14,7 +14,7 @@ import { IGamesRepository } from '../IGamesRepository';
 
   async findByTitleContaining(param: string): Promise<Game[]> {
       // Terminar
-      return await this.repository.createQueryBuilder("games").where("games.title like :title", { title: `%${param}%`}).getMany()
+      return await this.repository.createQueryBuilder("games").where("games.title ilike :title", { title: `%${param}%`}).getMany()
 
   }
 
@@ -31,7 +31,12 @@ import { IGamesRepository } from '../IGamesRepository';
   }
 
   async findUsersByGameId(id: string): Promise<User[]> {
-    // @ts-ignore
-    return await this.repository.createQueryBuilder("user").innerJoin("user.games", "users").getMany()  //where("games.id = :id", {id}).innerJoin("games.users", "users").getMany()
+    
+     const game = await this.repository.createQueryBuilder("games").leftJoinAndSelect("games.users", "user").select("").where("games.id = :id", {id}).getMany();
+
+     console.log(game[0]?.users);
+     
+     return game[0]?.users;
   }
+
 }
